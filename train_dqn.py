@@ -10,6 +10,17 @@ from cityflow_env import CityFlowSingleJunctionEnv
 
 
 # --------- Q-network --------- #
+"""
+This is a fully connected neural network that approximates the Q-function:
+Input: state vector of size state_dim (lane waiting counts).
+Output: vector of size action_dim (one Q-value per possible traffic light phase).
+Architecture:
+Linear(state_dim → 128), ReLU
+Linear(128 → 128), ReLU
+Linear(128 → action_dim)
+Action selection: take q_values.argmax(dim=1) to pick the action with max Q-value.
+"""
+
 
 class DQN(nn.Module):
     def __init__(self, state_dim, action_dim):
@@ -19,7 +30,7 @@ class DQN(nn.Module):
             nn.ReLU(),
             nn.Linear(128, 128),
             nn.ReLU(),
-            nn.Linear(128, action_dim)
+            nn.Linear(128, action_dim),
         )
 
     def forward(self, x):
@@ -27,6 +38,32 @@ class DQN(nn.Module):
 
 
 # --------- Replay buffer --------- #
+"""
+deque(maxlen=capacity) → when full, oldest entries are dropped automatically.
+push stores one transition:
+s: state (numpy array)
+a: action (int)
+r: reward (float)
+s_next: next state (numpy array)
+done: bool indicating episode termination
+
+random.sample selects batch_size transitions uniformly at random.
+zip(*batch) transposes list-of-tuples into tuple-of-lists.
+map(np.array, ...) converts each into a numpy array.
+Finally, converts each array into PyTorch tensors with appropriate dtypes:
+s_batch: (batch_size, state_dim) float32
+a_batch: (batch_size,) int64 (for indexing)
+r_batch: (batch_size,) float32
+s_next_batch: (batch_size, state_dim) float32
+done_batch: (batch_size,) float32 (0 or 1)
+
+
+Why replay buffer?
+Breaks correlations between consecutive samples.
+Reuses old experiences multiple times (sampled in random order).
+Stabilizes DQN training compared to updating only on the most recent transition.
+"""
+
 
 class ReplayBuffer:
     def __init__(self, capacity=100_000):
@@ -52,6 +89,16 @@ class ReplayBuffer:
 
 # --------- Training loop --------- #
 
+"""
+num_episodes: total episodes of training
+gamma: discount factor 
+batch_size: number of transitions per gradient update
+lr: learning rate for Adam optimizer
+epsilon_start, epsilon_end, epsilon_decay: parameters for ε-greedy exploration schedule
+target_update_freq: how many steps between target network updates
+"""
+
+
 def train_dqn(
     num_episodes=200,
     gamma=0.99,
@@ -60,21 +107,41 @@ def train_dqn(
     epsilon_start=1.0,
     epsilon_end=0.05,
     epsilon_decay=5000,
-    target_update_freq=1000
+    target_update_freq=1000,
 ):
     env = CityFlowSingleJunctionEnv(
         config_path="cityflow_scenario/config.json",
         intersection_id="intersection_1_1",
         action_duration=10,
-        max_episode_steps=300
+        max_episode_steps=300,
     )
 
     state = env.reset()
-    state_dim = state.shape[0]
-    action_dim = env.action_space_n
+    state_dim = state.shape[
+        0
+    ]  # state_dim: number of lanes used in state representation
+    action_dim = (
+        env.action_space_n
+    )  # number of traffic light phases at the intersection.
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    """
+    Two networks:
+    policy_net: Q-network being updated.
+    target_net: Q-network used to compute target values.
+    Initially, target_net is a clone of policy_net.
+    target_net.eval() ensures it’s in evaluation mode (no gradients, consistent behavior).
+    """
+    """
+    Why target network?
+    Classic DQN trick to stabilize learning:
+    Use a delayed copy of the Q-network to compute targets.
+    So targets change more slowly.
+    Reduces moving-target instability.
+    optimizer: Adam with learning rate lr.
+    replay_buffer: stores experience transitions while interacting with env.
+    """
     policy_net = DQN(state_dim, action_dim).to(device)
     target_net = DQN(state_dim, action_dim).to(device)
     target_net.load_state_dict(policy_net.state_dict())
@@ -87,7 +154,11 @@ def train_dqn(
 
     def epsilon_by_step(step):
         # simple exponential decay
-        return epsilon_end + (epsilon_start - epsilon_end) * np.exp(-step / epsilon_decay)
+        # So early training: heavy exploration.
+        # Later: mostly exploitation.
+        return epsilon_end + (epsilon_start - epsilon_end) * np.exp(
+            -step / epsilon_decay
+        )
 
     for ep in range(num_episodes):
         state = env.reset()
@@ -103,7 +174,9 @@ def train_dqn(
                 action = np.random.randint(action_dim)
             else:
                 with torch.no_grad():
-                    s_tensor = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+                    s_tensor = torch.tensor(
+                        state, dtype=torch.float32, device=device
+                    ).unsqueeze(0)
                     q_values = policy_net(s_tensor)
                     action = int(q_values.argmax(dim=1).item())
 
@@ -115,7 +188,9 @@ def train_dqn(
 
             # ---- update network ---- #
             if len(replay_buffer) >= batch_size:
-                s_batch, a_batch, r_batch, s_next_batch, done_batch = replay_buffer.sample(batch_size)
+                s_batch, a_batch, r_batch, s_next_batch, done_batch = (
+                    replay_buffer.sample(batch_size)
+                )
 
                 s_batch = s_batch.to(device)
                 a_batch = a_batch.to(device)

@@ -1,11 +1,12 @@
 from cityflow_env import CityFlowSingleJunctionEnv
 
+
 def main():
     env = CityFlowSingleJunctionEnv(
         config_path="cityflow_scenario/config.json",
         intersection_id="intersection_1_1",
         action_duration=10,
-        max_episode_steps=300
+        max_episode_steps=300,
     )
 
     num_episodes = 3
@@ -41,6 +42,7 @@ def main():
         print(f"Fixed-time Episode {ep+1} finished, total_reward={total_reward:.2f}")
 
     env.close()
+
 
 if __name__ == "__main__":
     main()

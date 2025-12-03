@@ -149,11 +149,11 @@
         }
       ],
       "trafficLight": {
-        "roadLinkIndices": [1, 2, 4, 5, 7, 8, 10, 11],
+        "roadLinkIndices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
         "lightphases": [
           {
-            "time": 30,
-            "availableRoadLinks": [0, 1, 2, 6, 7, 8],
+            "time": 20,
+            "availableRoadLinks": [0, 1, 2], 
             "yellow": 3
           },
           {
@@ -162,8 +162,28 @@
             "yellow": 0
           },
           {
-            "time": 30,
-            "availableRoadLinks": [3, 4, 5, 9, 10, 11],
+            "time": 20,
+            "availableRoadLinks": [3, 4, 5],
+            "yellow": 3
+          },
+          {
+            "time": 3,
+            "availableRoadLinks": [],
+            "yellow": 0
+          },
+          {
+            "time": 20,
+            "availableRoadLinks": [6, 7, 8],
+            "yellow": 3
+          },
+          {
+            "time": 3,
+            "availableRoadLinks": [],
+            "yellow": 0
+          },
+          {
+            "time": 20,
+            "availableRoadLinks": [9, 10, 11],
             "yellow": 3
           },
           {

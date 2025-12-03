@@ -6,7 +6,7 @@
   "flowFile": "flow_abudhabi.json",
   "rlTrafficLight": true,
   "laneChange": false,
-  "saveReplay": false,
+  "saveReplay": true,
   "roadnetLogFile": "replay_roadnet.json",
   "replayLogFile": "replay.txt"
 }

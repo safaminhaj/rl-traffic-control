@@ -3,7 +3,7 @@
     {
       "id": "intersection_0_1",
       "point": { "x": -300.0, "y": 0.0 },
-      "width": 1.0,
+      "width": 10.0,
       "roads": ["road_0_1_0", "road_1_1_0"],
       "trafficLight": null,
       "virtual": true
@@ -11,7 +11,7 @@
     {
       "id": "intersection_1_0",
       "point": { "x": 0.0, "y": -300.0 },
-      "width": 1.0,
+      "width": 10.0,
       "roads": ["road_1_0_1", "road_1_1_1"],
       "trafficLight": null,
       "virtual": true
@@ -19,7 +19,7 @@
     {
       "id": "intersection_2_1",
       "point": { "x": 300.0, "y": 0.0 },
-      "width": 1.0,
+      "width": 10.0,
       "roads": ["road_2_1_2", "road_1_1_2"],
       "trafficLight": null,
       "virtual": true
@@ -27,7 +27,7 @@
     {
       "id": "intersection_1_2",
       "point": { "x": 0.0, "y": 300.0 },
-      "width": 1.0,
+      "width": 10.0,
       "roads": ["road_1_2_3", "road_1_1_3"],
       "trafficLight": null,
       "virtual": true
@@ -35,7 +35,7 @@
     {
       "id": "intersection_1_1",
       "point": { "x": 0.0, "y": 0.0 },
-      "width": 1.0,
+      "width": 10.0,
       "roads": [
         "road_0_1_0",
         "road_1_0_1",
@@ -60,8 +60,8 @@
           "endRoad": "road_1_1_2",
           "type": "go_straight",
           "laneLinks": [
-            { "startLaneIndex": 1, "endLaneIndex": 1 },
-            { "startLaneIndex": 2, "endLaneIndex": 2 }
+            { "startLaneIndex": 0, "endLaneIndex": 0 },
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -69,7 +69,7 @@
           "endRoad": "road_1_1_3",
           "type": "turn_right",
           "laneLinks": [
-            { "startLaneIndex": 3, "endLaneIndex": 3 }
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -85,8 +85,8 @@
           "endRoad": "road_1_1_3",
           "type": "go_straight",
           "laneLinks": [
-            { "startLaneIndex": 1, "endLaneIndex": 1 },
-            { "startLaneIndex": 2, "endLaneIndex": 2 }
+            { "startLaneIndex": 0, "endLaneIndex": 0 },
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -94,7 +94,7 @@
           "endRoad": "road_1_1_0",
           "type": "turn_right",
           "laneLinks": [
-            { "startLaneIndex": 3, "endLaneIndex": 3 }
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -110,8 +110,8 @@
           "endRoad": "road_1_1_0",
           "type": "go_straight",
           "laneLinks": [
-            { "startLaneIndex": 1, "endLaneIndex": 1 },
-            { "startLaneIndex": 2, "endLaneIndex": 2 }
+            { "startLaneIndex": 0, "endLaneIndex": 0 },
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -119,7 +119,7 @@
           "endRoad": "road_1_1_1",
           "type": "turn_right",
           "laneLinks": [
-            { "startLaneIndex": 3, "endLaneIndex": 3 }
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -135,8 +135,8 @@
           "endRoad": "road_1_1_1",
           "type": "go_straight",
           "laneLinks": [
-            { "startLaneIndex": 1, "endLaneIndex": 1 },
-            { "startLaneIndex": 2, "endLaneIndex": 2 }
+            { "startLaneIndex": 0, "endLaneIndex": 0 },
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         },
         {
@@ -144,7 +144,7 @@
           "endRoad": "road_1_1_2",
           "type": "turn_right",
           "laneLinks": [
-            { "startLaneIndex": 3, "endLaneIndex": 3 }
+            { "startLaneIndex": 1, "endLaneIndex": 1 }
           ]
         }
       ],
@@ -153,7 +153,7 @@
         "lightphases": [
           {
             "time": 30,
-            "availableRoadLinks": [1, 2, 7, 8],
+            "availableRoadLinks": [0, 1, 2, 6, 7, 8],
             "yellow": 3
           },
           {
@@ -163,7 +163,7 @@
           },
           {
             "time": 30,
-            "availableRoadLinks": [4, 5, 10, 11],
+            "availableRoadLinks": [3, 4, 5, 9, 10, 11],
             "yellow": 3
           },
           {
@@ -176,8 +176,7 @@
       "virtual": false
     }
   ],
-  "roads": 
-  [
+  "roads": [
     {
       "id": "road_0_1_0",
       "points": [
@@ -185,8 +184,6 @@
         { "x": 0.0, "y": 0.0 }
       ],
       "lanes": [
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
@@ -201,8 +198,6 @@
       ],
       "lanes": [
         { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
       "startIntersection": "intersection_1_1",
@@ -215,8 +210,6 @@
         { "x": 0.0, "y": 0.0 }
       ],
       "lanes": [
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
@@ -231,8 +224,6 @@
       ],
       "lanes": [
         { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
       "startIntersection": "intersection_1_1",
@@ -245,8 +236,6 @@
         { "x": 0.0, "y": 0.0 }
       ],
       "lanes": [
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
@@ -261,8 +250,6 @@
       ],
       "lanes": [
         { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
       "startIntersection": "intersection_1_1",
@@ -276,8 +263,6 @@
       ],
       "lanes": [
         { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],
       "startIntersection": "intersection_1_2",
@@ -290,8 +275,6 @@
         { "x": 0.0, "y": 300.0 }
       ],
       "lanes": [
-        { "width": 3.5, "maxSpeed": 16.67 },
-        { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 },
         { "width": 3.5, "maxSpeed": 16.67 }
       ],

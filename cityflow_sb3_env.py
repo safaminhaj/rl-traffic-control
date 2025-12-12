@@ -22,7 +22,7 @@ class CityFlowSB3Env(gym.Env):
     ):
         super().__init__()
 
-        # Underlying environment (your original one)
+        # Underlying environment
         self.env = CityFlowSingleJunctionEnv(
             config_path=config_path,
             intersection_id=intersection_id,

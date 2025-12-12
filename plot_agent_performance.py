@@ -1,17 +1,14 @@
 import matplotlib.pyplot as plt
 
-# === 1. Fill these with your actual averages ===
-custom_dqn_avg = -2259.05   # replace with your logged value
-sb3_dqn_avg    = -1829.00   # replace with your logged value
-sb3_ppo_avg    = -924.30 # replace with your logged value
+#  Fill these with the actual averages 
+custom_dqn_avg = -2259.05   # replace with  logged value
+sb3_dqn_avg    = -1829.00   # replace with  logged value
+sb3_ppo_avg    = -924.30 # replace with  logged value
 
 agents = ["Custom DQN", "SB3 DQN", "SB3 PPO"]
 avg_rewards = [custom_dqn_avg, sb3_dqn_avg, sb3_ppo_avg]
 
-# Because rewards are negative (waiting time), we can also plot their absolute value
-# if you want "higher = better". Comment out the next line if you prefer raw rewards.
-# avg_rewards_plot = [-r for r in avg_rewards]  # convert to "effective score"
-# ylabel = "Effective score (higher is better)"
+# Because rewards are negative (waiting time), we plot their absolute value
 
 avg_rewards_plot = avg_rewards
 ylabel = "Average reward (less negative is better)"

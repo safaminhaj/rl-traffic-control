@@ -1,5 +1,106 @@
 Setup:
 1. Windows/Ubuntu
+1. Clone the Repository
+git clone https://github.com/safaminhaj/rl-traffic-control.git
+cd rl-traffic-control
+2. Install Conda (Recommended)
+
+If conda is not installed, install Miniconda:
+
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+
+
+Restart your terminal, then create and activate the environment:
+
+conda create -n cityflow python=3.10 -y
+conda activate cityflow
+
+
+Python 3.12 is not supported because CityFlow’s pybind11 bindings require Python 3.10 or 3.11.
+3. Install System Dependencies
+sudo apt update
+sudo apt install -y cmake g++ make git python3-pip
+4. Install CityFlow from Source
+
+CityFlow must be installed manually.
+
+cd CityFlow
+python -m pip install .
+cd ..
+
+
+Test installation:
+
+python -c "import cityflow; print('CityFlow installed correctly')"
+5. Install Python Dependencies
+pip install torch numpy stable-baselines3 gymnasium
+6. Verify the Simulation Setup (Smoke Test)
+
+Run the provided test script:
+
+python test_cityflow.py
+7. Run Baseline Controllers
+Random Agent
+python run_random_agent.py
+
+Fixed-Time Baseline
+python run_baseline.py
+
+
+These provide reference performance for comparison with RL agents.
+8. Train the Custom DQN Agent
+python train_dqn.py
+
+
+After training, the model is saved as:
+
+dqn_cityflow.pt
+
+Evaluate the trained model:
+python evaluate_dqn.py
+9. Train SB3 Agents
+SB3 DQN
+python train_sb3_dqn.py
+python eval_sb3_dqn.py
+
+SB3 PPO (Best Performing Agent)
+python train_sb3_ppo.py
+python eval_sb3_ppo.py
+
+
+Model files are saved automatically under the project directory.
+10. Visualize Simulation in CityFlow Viewer
+
+CityFlow can generate replay logs:
+
+cityflow_scenario/replay.txt
+cityflow_scenario/replay_roadnet.json
+
+
+To visualize:
+
+Open CityFlow’s web UI (index.html) locally in a browser
+
+Upload both files
+
+Watch the animated simulation of the intersection under RL control
+11. Project Structure
+rl-traffic-control/
+│── CityFlow/                   # CityFlow engine (compiled here)
+│── cityflow_scenario/          # Abu Dhabi intersection setup
+│── test_cityflow.py            # Smoke test
+│── cityflow_env.py             # Custom RL environment wrapper
+│── run_random_agent.py         # Random baseline
+│── run_baseline.py             # Fixed-time baseline
+│── train_dqn.py                # Custom PyTorch DQN training
+│── evaluate_dqn.py             # Custom DQN evaluation
+│── train_sb3_dqn.py            # SB3 DQN agent
+│── eval_sb3_dqn.py             # SB3 DQN evaluation
+│── train_sb3_ppo.py            # SB3 PPO agent (best)
+│── eval_sb3_ppo.py             # SB3 PPO evaluation
+└── README.md
+
 2. Mac
 
 

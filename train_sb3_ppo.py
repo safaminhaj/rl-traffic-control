@@ -12,12 +12,12 @@ def main():
         max_episode_steps=300,
     )
 
-    # PPO model with reasonable hyperparameters for this kind of task
+    # PPO model
     model = PPO(
         "MlpPolicy",
         env,
         learning_rate=3e-4,
-        n_steps=512,           # rollouts per update (can be tuned)
+        n_steps=512,           # rollouts per update
         batch_size=64,
         n_epochs=10,
         gamma=0.99,
@@ -25,15 +25,15 @@ def main():
         clip_range=0.2,
         ent_coef=0.01,         # small exploration bonus
         verbose=1,
-        # tensorboard_log=None,  # add a path if you later want TB logs
+        # tensorboard_log=None,  # add a path for TB logs
     )
 
-    # Number of environment steps (each step = 10 sim seconds in your env)
+    # Number of environment steps (each step = 10 sim seconds in the env)
     total_timesteps = 200_000
 
     model.learn(total_timesteps=total_timesteps)
 
-    # Save trained PPO model
+    # Saving trained PPO model
     model.save("sb3_ppo_cityflow")
 
     env.close()

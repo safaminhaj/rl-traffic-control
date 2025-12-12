@@ -49,7 +49,7 @@ def evaluate(num_episodes=20):
                 state, dtype=torch.float32, device=device
             ).unsqueeze(0)
             """
-            crucial: during training DQN, we used greedy exploraration (ε-greedy) to balance exploration and exploitation.
+            During training DQN, we used greedy exploraration (ε-greedy) to balance exploration and exploitation.
             During evaluation, we want to use the learned policy only, without exploration.
             Therefore, we select the action with the highest Q-value directly.
             torch.tensor(...) converts the state vector into a PyTorch tensor

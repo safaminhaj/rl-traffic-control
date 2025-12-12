@@ -59,9 +59,21 @@ done_batch: (batch_size,) float32 (0 or 1)
 
 
 Why replay buffer?
-Breaks correlations between consecutive samples.
-Reuses old experiences multiple times (sampled in random order).
-Stabilizes DQN training compared to updating only on the most recent transition.
+- In online RL, consecutive samples are *highly correlated* (step t and t+1 are almost the same).
+- If we trained directly on the latest transition only, gradient updates would be:
+    * very noisy
+    * strongly biased by whatever just happened
+    * prone to divergence.
+
+What the replay buffer gives us:
+
+- We store many past transitions in a queue.
+- During training we draw *random mini-batches* from this buffer:
+    * breaks temporal correlations between samples
+    * lets us reuse each transition multiple times → more data-efficient
+    * smooths out weird one-off events (e.g., sudden burst of vehicles).
+
+This is one of the core tricks that makes DQN stable and practical.
 """
 
 
@@ -135,12 +147,27 @@ def train_dqn(
     """
     """
     Why target network?
-    Classic DQN trick to stabilize learning:
-    Use a delayed copy of the Q-network to compute targets.
-    So targets change more slowly.
-    Reduces moving-target instability.
-    optimizer: Adam with learning rate lr.
-    replay_buffer: stores experience transitions while interacting with env.
+    If we used only one network (policy_net) for everything, we would:
+      - Predict Q(s, a) with it, *and*
+      - Build our training targets with it: r + γ max_a' Q(s', a').
+
+    Then, every time we change the network weights, the targets themselves
+    would immediately change too → the algorithm ends up chasing a moving
+    target and can easily become unstable.
+
+    The fix (from the original DQN paper):
+
+    - Keep a separate copy of the network called target_net.
+    - policy_net is updated every gradient step.
+    - target_net is kept frozen most of the time and only synced from
+      policy_net every `target_update_freq` steps.
+
+    Effect:
+
+    - Targets r + γ max_a' Q_target(s', a') change more slowly.
+    - Learning becomes much more stable.
+    - In our code, `target_update_freq` controls how often we copy
+      policy_net → target_net.
     """
     policy_net = DQN(state_dim, action_dim).to(device)
     target_net = DQN(state_dim, action_dim).to(device)

@@ -2,7 +2,7 @@ import cityflow
 import os
 
 """
-This script is a smoke test — its purpose is only to verify that CityFlow loads correctly, the config and roadnet files are working, and that the simulator runs for several steps without crashing.
+Smoke test — its purpose is only to verify that CityFlow loads correctly, the config and roadnet files are working, and that the simulator runs for several steps without crashing.
 
 This file does not involve RL at all.
 It purely tests the simulator.

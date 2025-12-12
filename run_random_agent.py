@@ -62,7 +62,7 @@ def main(num_episodes=20):
 """
 Compute and print the mean reward from all episodes.
 That average becomes the performance benchmark for a random agent.
-Your RL agent should score better than random, meaning:
+The RL agent should score better than random, meaning:
 rewards should be less negative
 fewer cars waiting in total
 """

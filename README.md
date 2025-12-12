@@ -1,4 +1,7 @@
 Frontend url CityFlow simulator: https://importly.github.io/CityFlow/frontend/
+Data files are in /cityflow_scenario
+- roadnet_abudhabi.json
+- flow_abudhabi.json
 
 Setup:
 1. Windows/Ubuntu

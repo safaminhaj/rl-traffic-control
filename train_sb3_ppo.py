@@ -4,7 +4,7 @@ from cityflow_sb3_env import CityFlowSB3Env
 
 
 def main():
-    # Create env (reuses your SB3 wrapper)
+    # Create env (reuses our SB3 wrapper)
     env = CityFlowSB3Env(
         config_path="cityflow_scenario/config.json",
         intersection_id="intersection_1_1",
@@ -25,7 +25,6 @@ def main():
         clip_range=0.2,
         ent_coef=0.01,         # small exploration bonus
         verbose=1,
-        # tensorboard_log=None,  # add a path for TB logs
     )
 
     # Number of environment steps (each step = 10 sim seconds in the env)

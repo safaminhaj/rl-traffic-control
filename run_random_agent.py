@@ -4,7 +4,7 @@ import random
 
 """
 numpy: used to compute average reward at the end
-CityFlowSingleJunctionEnv: your RL environment wrapper
+CityFlowSingleJunctionEnv: our RL environment wrapper
 random: Python's built-in RNG for choosing random actions
 This agent does not learn; it just samples random actions.
 

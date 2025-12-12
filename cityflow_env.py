@@ -41,7 +41,7 @@ class CityFlowSingleJunctionEnv:
 
         self.eng = cityflow.Engine(self.config_path, thread_num=1)
         # Uses config file.
-        # thread_num=1 means one simulation thread (simpler and deterministic for RL).
+        # thread_num=1 means one simulation thread , simpler and deterministic for RL.
 
         # Load scenario info from config/roadnet
         with open(self.config_path) as f:
@@ -62,7 +62,6 @@ class CityFlowSingleJunctionEnv:
             )
 
         # A fixed, sorted lane order for the state vector
-        # (all lanes in the network for now – for a small toy grid)
         lane_waiting = self.eng.get_lane_waiting_vehicle_count()
         self.lanes = sorted(lane_waiting.keys())
 
@@ -70,7 +69,7 @@ class CityFlowSingleJunctionEnv:
 
     @staticmethod
     # Search the road network JSON to find the intersection with id == intersection_id
-    # Otherwise, count the number of entries in lightphases – that’s the number of discrete phases the agent can choose from.
+    # Otherwise, count the number of entries in lightphases  that’s the number of discrete phases the agent can choose from.
     def _get_num_phases(roadnet, intersection_id):
         for inter in roadnet["intersections"]:
             if inter["id"] == intersection_id:

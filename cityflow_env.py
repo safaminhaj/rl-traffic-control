@@ -80,8 +80,6 @@ class CityFlowSingleJunctionEnv:
                 return len(tl.get("lightphases", []))
         return 0
 
-    # ------------ Core RL API ------------ #
-
     def reset(self):
         """Reset simulation and return initial state."""
         self.eng.reset()
@@ -127,8 +125,6 @@ class CityFlowSingleJunctionEnv:
         }
 
         return next_state, reward, done, info
-
-    # ------------ Helpers ------------ #
 
     def _get_state(self):
         """State: waiting vehicle count on each lane (fixed order)."""

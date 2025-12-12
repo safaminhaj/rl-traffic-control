@@ -9,7 +9,7 @@ import torch.optim as optim
 from cityflow_env import CityFlowSingleJunctionEnv
 
 
-# --------- Q-network --------- #
+# Q-network 
 """
 This is a fully connected neural network that approximates the Q-function:
 Input: state vector of size state_dim (lane waiting counts).
@@ -37,7 +37,7 @@ class DQN(nn.Module):
         return self.net(x)
 
 
-# --------- Replay buffer --------- #
+# Replay buffer
 """
 deque(maxlen=capacity) → when full, oldest entries are dropped automatically.
 push stores one transition:
@@ -87,7 +87,7 @@ class ReplayBuffer:
         return len(self.buffer)
 
 
-# --------- Training loop --------- #
+# Training loop 
 
 """
 num_episodes: total episodes of training
@@ -186,7 +186,7 @@ def train_dqn(
             state = next_state
             total_reward += reward
 
-            # ---- update network ---- #
+            # update network 
             if len(replay_buffer) >= batch_size:
                 s_batch, a_batch, r_batch, s_next_batch, done_batch = (
                     replay_buffer.sample(batch_size)
@@ -214,7 +214,7 @@ def train_dqn(
                 nn.utils.clip_grad_norm_(policy_net.parameters(), 1.0)
                 optimizer.step()
 
-            # ---- update target network ---- #
+            # update target network             
             if global_step % target_update_freq == 0:
                 target_net.load_state_dict(policy_net.state_dict())
 

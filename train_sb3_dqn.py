@@ -30,7 +30,7 @@ def main():
         verbose=1
     )
 
-    # Number of env steps (each step = one action → 10 sim seconds in your env)
+    # Number of env steps (each step = one action → 10 sim seconds in our env)
     total_timesteps = 200_000
 
     model.learn(total_timesteps=total_timesteps)

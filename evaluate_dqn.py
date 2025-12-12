@@ -6,7 +6,7 @@ from train_dqn import DQN  # uses the same network architecture
 
 # DQN (from train_dqn.py) → the neural network class used during training
 """
-Loads your trained DQN model from disk
+Loads our trained DQN model from disk
 Runs it only in evaluation mode (no exploration, no ε-greedy)
 Measures how good the policy is across several episodes
 Produces an average reward metric to compare against random, fixed-time, and training runs

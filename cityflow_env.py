@@ -40,7 +40,7 @@ class CityFlowSingleJunctionEnv:
             raise FileNotFoundError(f"Config file not found: {self.config_path}")
 
         self.eng = cityflow.Engine(self.config_path, thread_num=1)
-        # Uses our config file.
+        # Uses config file.
         # thread_num=1 means one simulation thread (simpler and deterministic for RL).
 
         # Load scenario info from config/roadnet
@@ -54,23 +54,23 @@ class CityFlowSingleJunctionEnv:
         with open(roadnet_path) as f:
             roadnet = json.load(f)
 
-        # Find number of phases for our intersection
+        # Find number of phases for intersection
         self.num_phases = self._get_num_phases(roadnet, self.intersection_id)
         if self.num_phases == 0:
             raise ValueError(
                 f"No traffic light phases found for {self.intersection_id}"
             )
 
-        # We'll use a fixed, sorted lane order for the state vector
-        # (all lanes in the network for now – fine for a small toy grid)
+        # A fixed, sorted lane order for the state vector
+        # (all lanes in the network for now – for a small toy grid)
         lane_waiting = self.eng.get_lane_waiting_vehicle_count()
         self.lanes = sorted(lane_waiting.keys())
 
         self.current_step = 0
 
     @staticmethod
-    # This searches the road network JSON to find the intersection with id == intersection_id
-    # Otherwise, counts the number of entries in lightphases – that’s the number of discrete phases the agent can choose from.
+    # Search the road network JSON to find the intersection with id == intersection_id
+    # Otherwise, count the number of entries in lightphases – that’s the number of discrete phases the agent can choose from.
     def _get_num_phases(roadnet, intersection_id):
         for inter in roadnet["intersections"]:
             if inter["id"] == intersection_id:
@@ -85,7 +85,7 @@ class CityFlowSingleJunctionEnv:
         self.eng.reset()
         self.current_step = 0
 
-        # Optional: set an initial phase (0)
+        # set an initial phase (0)
         self.eng.set_tl_phase(self.intersection_id, 0)
 
         return self._get_state()
@@ -106,7 +106,7 @@ class CityFlowSingleJunctionEnv:
                 f"Invalid phase {phase_id}, should be in [0, {self.num_phases-1}]"
             )
 
-        # Set the traffic light phase
+        # Setting the traffic light phase
         self.eng.set_tl_phase(self.intersection_id, phase_id)
 
         # Advance simulation for 'action_duration' seconds
